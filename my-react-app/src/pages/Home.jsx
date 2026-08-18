@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Home.css";
+import { Link } from "react-router-dom";
 
 // Slide images sourced from Unsplash (free to use under the Unsplash License).
 const slides = [
@@ -53,7 +54,7 @@ export default function Home() {
       <header className="navbar">
         <span className="wordmark">ToBelong</span>
         <nav className="nav-actions">
-          <button className="nav-btn nav-btn--buy">Buy</button>
+         <Link to="/buy" className="nav-btn nav-btn--buy">Buy</Link>
           <button className="nav-btn nav-btn--sell">Sell</button>
         </nav>
       </header>
