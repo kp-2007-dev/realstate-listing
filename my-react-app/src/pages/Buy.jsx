@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Buy.css";
+import { propertyTypes, propertyCategories } from "../data/propertyOptions";
+import { useProperties } from "../context/PropertyContext";
 
-
-const propertyTypes = ["Land", "Flat", "Business", "Housing", "Rental", "House", "Apartment"];
-const propertyCategories = ["Commercial", "Semi-Commercial", "Residential"];
-
-// Deterministic helpers so the same photo always maps to the same fake type/price
 const getType = (id) => propertyTypes[id % propertyTypes.length];
 const getCategory = (id) => propertyCategories[id % propertyCategories.length];
 const getPrice = (id) => `$${(150 + (id % 50) * 8).toLocaleString()},000`;
@@ -16,7 +13,6 @@ const locations = [
 ];
 const getLocation = (id) => locations[id % locations.length];
 
-// Real property photos (Unsplash — same domain already used in Home.jsx)
 const stockPhotos = [
   "https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80",
@@ -36,6 +32,8 @@ export default function Buy() {
   const [error, setError] = useState(null);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const { userProperties } = useProperties();
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -54,6 +52,7 @@ export default function Buy() {
           category: getCategory(item.id),
           img: getPhoto(item.id),
           desc: "A well-maintained property in a desirable neighborhood, ready for its next owner.",
+          contactEmail: "listings@tobelong.com",
         }));
 
         setProperties(mapped);
@@ -74,7 +73,9 @@ export default function Buy() {
     );
   };
 
-  const filteredProperties = properties.filter((p) => {
+  const allProperties = [...userProperties, ...properties];
+
+  const filteredProperties = allProperties.filter((p) => {
     const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(p.type);
     const categoryMatch =
       selectedCategories.length === 0 || selectedCategories.includes(p.category);
@@ -146,7 +147,12 @@ export default function Buy() {
                       <p className="property-desc">{p.desc}</p>
                       <div className="property-footer">
                         <span className="property-price">{p.price}</span>
-                        <button className="view-btn">View Details</button>
+                        <button
+                          className="view-btn"
+                          onClick={() => setSelectedProperty(p)}
+                        >
+                          View Details
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -160,6 +166,50 @@ export default function Buy() {
           )}
         </main>
       </div>
+
+      {selectedProperty && (
+        <div className="modal-overlay" onClick={() => setSelectedProperty(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              onClick={() => setSelectedProperty(null)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+
+            <div
+              className="modal-img"
+              style={{ backgroundImage: `url(${selectedProperty.img})` }}
+            >
+              <span className="property-tag">{selectedProperty.type}</span>
+            </div>
+
+            <div className="modal-body">
+              <h2>{selectedProperty.title}</h2>
+              <p className="modal-location">{selectedProperty.location}</p>
+
+              <div className="modal-meta">
+                <span><strong>Type:</strong> {selectedProperty.type}</span>
+                <span><strong>Category:</strong> {selectedProperty.category}</span>
+              </div>
+
+              <p className="modal-price">{selectedProperty.price}</p>
+              <p className="modal-desc">{selectedProperty.desc}</p>
+
+              <div className="modal-contact">
+                <h4>Interested in this property?</h4>
+                <p>
+                  Contact the seller at{" "}
+                  <a href={`mailto:${selectedProperty.contactEmail || "listings@tobelong.com"}`}>
+                    {selectedProperty.contactEmail || "listings@tobelong.com"}
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -53,10 +53,10 @@ export default function Home() {
       {/* Navigation */}
       <header className="navbar">
         <span className="wordmark">ToBelong</span>
-        <nav className="nav-actions">
-         <Link to="/buy" className="nav-btn nav-btn--buy">Buy</Link>
-          <button className="nav-btn nav-btn--sell">Sell</button>
-        </nav>
+       <nav className="nav-actions">
+ <Link to="/buy" className="nav-btn nav-btn--buy">Buy</Link>
+  <Link to="/sell" className="nav-btn nav-btn--sell">Sell</Link>
+</nav>
       </header>
 
       {/* Hero / slider */}
@@ -100,10 +100,7 @@ export default function Home() {
         <div className="hero-text">
           <h1>Find the place you belong.</h1>
           <p>Browse homes to buy, or list the one you're ready to sell — all in one place.</p>
-          <div className="hero-actions">
-            <button className="cta cta--buy">Start buying</button>
-            <button className="cta cta--sell">Start selling</button>
-          </div>
+         
         </div>
       </section>
     </div>

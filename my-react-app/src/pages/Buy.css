@@ -9,6 +9,7 @@
 .buy-topbar {
   background-color: #eeece5;
   padding: 20px 40px;
+  text-align: left;
 }
 
 .back-link {
@@ -32,23 +33,35 @@
   margin: 0 auto;
 }
 
-/* Sidebar */
+/* Sidebar — two columns divided like a table */
 .buy-sidebar {
-  width: 240px;
+  width: 420px;
   flex-shrink: 0;
-  border-right: 1px solid #ddd8cd;
-  padding-right: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #ddd8cd;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
 }
 
 .filter-group {
-  margin-bottom: 32px;
+  margin-bottom: 0;
+  padding: 20px;
+}
+
+.filter-group:first-child {
+  border-right: 1px solid #ddd8cd;
 }
 
 .filter-group h3 {
   font-family: Georgia, serif;
-  font-size: 18px;
-  margin-bottom: 14px;
+  font-size: 16px;
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd8cd;
   color: #2b2b2b;
+  text-align: left;
 }
 
 .filter-checkbox {
@@ -56,7 +69,7 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 12px;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -65,6 +78,7 @@
   height: 16px;
   accent-color: #3b5d45;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 /* Gallery */
@@ -178,6 +192,115 @@
   text-align: center;
 }
 
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #ffffffdd;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.modal-close:hover {
+  background: #fff;
+}
+
+.modal-img {
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px 16px 0 0;
+  position: relative;
+}
+
+.modal-body {
+  padding: 24px 28px 28px;
+}
+
+.modal-body h2 {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  margin: 0 0 4px;
+}
+
+.modal-location {
+  color: #6b6b6b;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.modal-meta {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  margin-bottom: 14px;
+  color: #444;
+}
+
+.modal-price {
+  font-weight: 700;
+  color: #3b5d45;
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+.modal-desc {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.modal-contact {
+  background: #f7f5f0;
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.modal-contact h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.modal-contact a {
+  color: #3b5d45;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.modal-contact a:hover {
+  text-decoration: underline;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .buy-layout {
@@ -185,9 +308,6 @@
   }
   .buy-sidebar {
     width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #ddd8cd;
-    padding-bottom: 20px;
   }
   .property-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -195,6 +315,13 @@
 }
 
 @media (max-width: 600px) {
+  .buy-sidebar {
+    grid-template-columns: 1fr;
+  }
+  .filter-group:first-child {
+    border-right: none;
+    border-bottom: 1px solid #ddd8cd;
+  }
   .property-grid {
     grid-template-columns: 1fr;
   }
