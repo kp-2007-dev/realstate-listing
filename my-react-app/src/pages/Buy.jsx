@@ -33,6 +33,7 @@ export default function Buy() {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
   const { userProperties } = useProperties();
 
   useEffect(() => {
@@ -82,6 +83,8 @@ export default function Buy() {
     return typeMatch && categoryMatch;
   });
 
+  const activeFilterCount = selectedTypes.length + selectedCategories.length;
+
   return (
     <div className="buy-page">
       <div className="buy-topbar">
@@ -90,46 +93,77 @@ export default function Buy() {
         </Link>
       </div>
 
-      <div className="buy-layout">
-        <aside className="buy-sidebar">
-          <div className="filter-group">
-            <h3>Property Type</h3>
-            {propertyTypes.map((type) => (
-              <label key={type} className="filter-checkbox">
-                <input
-                  type="checkbox"
-                  checked={selectedTypes.includes(type)}
-                  onChange={() => toggleFilter(type, selectedTypes, setSelectedTypes)}
-                />
-                {type}
-              </label>
-            ))}
+      <div className="buy-content">
+        <div className="buy-header-row">
+          <div>
+            <h1>Find Your Next Property</h1>
+            {!loading && !error && (
+              <p className="results-count">{filteredProperties.length} properties found</p>
+            )}
           </div>
 
-          <div className="filter-group">
-            <h3>Property Category</h3>
-            {propertyCategories.map((cat) => (
-              <label key={cat} className="filter-checkbox">
-                <input
-                  type="checkbox"
-                  checked={selectedCategories.includes(cat)}
-                  onChange={() => toggleFilter(cat, selectedCategories, setSelectedCategories)}
-                />
-                {cat}
-              </label>
-            ))}
+          <button
+            className="filter-toggle-btn"
+            onClick={() => setShowFilters((prev) => !prev)}
+          >
+            Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
+          </button>
+        </div>
+
+        {showFilters && (
+          <div className="filter-panel">
+            <div className="filter-group">
+              <h3>Property Type</h3>
+              <div className="filter-options">
+                {propertyTypes.map((type) => (
+                  <label key={type} className="filter-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={selectedTypes.includes(type)}
+                      onChange={() => toggleFilter(type, selectedTypes, setSelectedTypes)}
+                    />
+                    {type}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <h3>Property Category</h3>
+              <div className="filter-options">
+                {propertyCategories.map((cat) => (
+                  <label key={cat} className="filter-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes(cat)}
+                      onChange={() => toggleFilter(cat, selectedCategories, setSelectedCategories)}
+                    />
+                    {cat}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {activeFilterCount > 0 && (
+              <button
+                className="clear-filters-btn"
+                onClick={() => {
+                  setSelectedTypes([]);
+                  setSelectedCategories([]);
+                }}
+              >
+                Clear all filters
+              </button>
+            )}
           </div>
-        </aside>
+        )}
 
         <main className="buy-gallery">
-          <h1>Find Your Next Property</h1>
-
           {loading && <p className="results-count">Loading properties...</p>}
           {error && <p className="no-results">Error: {error}</p>}
 
           {!loading && !error && (
             <>
-              <p className="results-count">{filteredProperties.length} properties found</p>
               <div className="property-grid">
                 {filteredProperties.map((p) => (
                   <div className="property-card" key={p.id}>

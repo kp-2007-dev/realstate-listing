@@ -1,0 +1,122 @@
+.about-page {
+  min-height: 100vh;
+  background: #f5f2ea;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.about-topbar {
+  padding: 20px 40px;
+}
+
+.about-topbar .back-link {
+  text-decoration: none;
+  color: #2f5233;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.about-topbar .back-link:hover {
+  text-decoration: underline;
+}
+
+.about-layout {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 10px 40px 80px;
+  text-align: center;
+}
+
+.about-layout h1 {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.about-subtitle {
+  font-family: Arial, sans-serif;
+  color: #5a5a52;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.about-content {
+  font-family: Arial, sans-serif;
+  text-align: left;
+  color: #3a3a35;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.about-content p {
+  margin-bottom: 16px;
+}
+
+.about-values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.value-card {
+  background: #fff;
+  border: 1px solid #ddd8cd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+}
+
+.value-card h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+  color: #2f5233;
+}
+
+.value-card p {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  color: #5a5a52;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.about-cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.about-btn {
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.about-btn--buy {
+  background: #2f5233;
+  color: #fff;
+}
+
+.about-btn--buy:hover {
+  background: #26421c;
+}
+
+.about-btn--sell {
+  background: #fff;
+  color: #2f5233;
+  border: 1px solid #2f5233;
+}
+
+.about-btn--sell:hover {
+  background: #eef3ec;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .about-values {
+    grid-template-columns: 1fr;
+  }
+}

@@ -280,3 +280,11 @@
     width: 100%;
   }
 }
+.nav-btn--about {
+  color: #2b2b2b;
+  border: 1px solid transparent;
+}
+
+.nav-btn--about:hover {
+  border-color: #2b2b2b;
+}
